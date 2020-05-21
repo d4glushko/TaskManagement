@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -125,18 +126,20 @@ namespace TaskManagement.Controllers
         // GET: TaskModels/CreateTask
         public ActionResult CreateTask(Guid? columnId)
         {
-            if (columnId == null)
+            var userId = User.Identity.GetUserId();
+            if (columnId == null || string.IsNullOrEmpty(userId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ColumnModel columnModel = db.ColumnModels.Find(columnId);
-            if (columnModel == null)
+            Users user = db.Users.Find(userId);
+            if (columnModel == null || user == null)
             {
                 return HttpNotFound();
             }
             ViewBag.ColumnID = new SelectList(db.ColumnModels.OrderBy(x => x.Position), "ID", "Name", columnModel.ID);
             //ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name");
-            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email");
+            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email", user.Id);
             return View();
         }
 

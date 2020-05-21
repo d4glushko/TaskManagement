@@ -123,3 +123,9 @@ textarea {
         .board-container .col-item .task-item-container .row-item-head .head-name {
             flex: 1;
         }
+
+.greeting {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+}
