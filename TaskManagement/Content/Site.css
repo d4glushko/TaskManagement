@@ -120,6 +120,12 @@ textarea {
             font-style: italic;
         }
 
+        /*.board-container .col-item .task-item-container .row-item-body {
+            max-height: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }*/
+
         .board-container .col-item .task-item-container .row-item-head .head-name {
             flex: 1;
         }
