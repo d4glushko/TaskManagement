@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TaskManagement.Models.ColumnModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Board</h2>
+
+<div class="board-container">
+    @foreach (var item in Model.OrderBy(x => x.Position))
+    {
+        <div class="col-item-container col-item">
+            <div class="col-item-head">
+                @*@Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Edit", "Edit", new { id = item.ID }) | @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                <div class="head-name">@Html.DisplayFor(modelItem => item.Name)</div>
+                <a href="@Url.Action("Edit", new { id = item.ID })" class="edit-item"></a>
+                <a href="@Url.Action("Delete", new { id = item.ID })" class="delete-item"></a>
+            </div>
+            @foreach (var task in item.Tasks.OrderBy(x => x.Position))
+            {
+                <div class="task-item-container row-item">
+                    <div class="row-item-head">
+                        @*@Html.DisplayFor(modelItem => task.Name) @Html.ActionLink("Edit", "EditTask", new { id = task.ID }) | @Html.ActionLink("Delete", "DeleteTask", new { id = task.ID })*@
+                        <div class="head-name">@Html.DisplayFor(modelItem => task.Name)</div>
+                        <a href="@Url.Action("EditTask", new { id = task.ID })" class="edit-item"></a>
+                        <a href="@Url.Action("DeleteTask", new { id = task.ID })" class="delete-item"></a>
+                    </div>
+                    <div class="row-item-body">@Html.DisplayFor(modelItem => task.Description)</div>
+                </div>
+            }
+            <a href="@Url.Action("CreateTask")" class="task-item-new"></a>
+            @*<div class="task-item-new">@Html.ActionLink("Create New", "CreateTask")</div>*@
+        </div>
+    }
+    <a href="@Url.Action("Create")" class="col-item-new col-item"></a>
+    @*<div class="col-item-new col-item">@Html.ActionLink("Create New", "Create")</div>*@
+</div>

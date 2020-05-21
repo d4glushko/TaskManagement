@@ -1,0 +1,116 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.board-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+    .board-container .edit-item {
+        justify-content: center;
+        align-items: center;
+        background: url("./Images/edit-button.png") no-repeat center;
+        background-size: contain;
+        width: 15px;
+        height: 15px;
+    }
+
+    .board-container .delete-item {
+        justify-content: center;
+        align-items: center;
+        background: url("./Images/delete.png") no-repeat center;
+        background-size: contain;
+        width: 15px;
+        height: 15px;
+    }
+
+    .board-container .col-item-new {
+        justify-content: center;
+        align-items: center;
+        background: url("./Images/plus-sign.png") no-repeat center;
+        background-size: contain;
+        width: 25px;
+        height: 25px;
+    }
+
+    .board-container .col-item-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        flex: 1;
+        background-color: #ebeced;
+        border-radius: 10px;
+        /*border-right: 1px solid black;*/
+    }
+
+    .board-container .col-item {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .board-container .col-item-container .col-item-head {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+    }
+
+        .board-container .col-item-container .col-item-head .head-name {
+            flex: 1;
+        }
+
+    .board-container .col-item-container .task-item-new {
+        justify-content: center;
+        align-items: center;
+        background: url("./Images/plus-sign.png") no-repeat center;
+        background-size: contain;
+        width: 15px;
+        height: 15px;
+        align-self: center;
+    }
+
+    .board-container .col-item .row-item {
+        margin-bottom: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .board-container .col-item .task-item-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+        .board-container .col-item .task-item-container .row-item-head {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+            .board-container .col-item .task-item-container .row-item-head .head-name {
+                flex: 1;
+            }
