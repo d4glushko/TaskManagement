@@ -17,6 +17,7 @@ BEGIN
 CREATE TABLE [dbo].[TaskModels](
 	[ID] [uniqueidentifier] NOT NULL,
 	[ColumnID] [uniqueidentifier] NOT NULL,
+	[UserID] [nvarchar](128) NULL,
 	[Name] [nvarchar](max) NOT NULL,
 	[Description] [nvarchar](max) NULL,
 	[Position] [int] NOT NULL,
@@ -33,5 +34,13 @@ ALTER TABLE [dbo].[TaskModels]  WITH CHECK ADD CONSTRAINT [fk_TaskModels_ColumnM
 REFERENCES [dbo].[ColumnModels] ([ID])
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[fk_TaskModels_ColumnModels_ColumnID]') AND parent_object_id = OBJECT_ID(N'[dbo].[TaskModels]'))
+ALTER TABLE [dbo].[TaskModels] CHECK CONSTRAINT [fk_TaskModels_ColumnModels_ColumnID]
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[fk_TaskModels_AspNetUsers_UserID]') AND parent_object_id = OBJECT_ID(N'[dbo].[TaskModels]'))
+ALTER TABLE [dbo].[TaskModels]  WITH CHECK ADD CONSTRAINT [fk_TaskModels_AspNetUsers_UserID] FOREIGN KEY([UserID])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[fk_TaskModels_AspNetUsers_UserID]') AND parent_object_id = OBJECT_ID(N'[dbo].[TaskModels]'))
 ALTER TABLE [dbo].[TaskModels] CHECK CONSTRAINT [fk_TaskModels_ColumnModels_ColumnID]
 GO

@@ -25,10 +25,11 @@
                         <a href="@Url.Action("EditTask", new { id = task.ID })" class="edit-item"></a>
                         <a href="@Url.Action("DeleteTask", new { id = task.ID })" class="delete-item"></a>
                     </div>
+                    <div class="row-item-owner">@Html.DisplayFor(modelItem => task.User.Email)</div>
                     <div class="row-item-body">@Html.DisplayFor(modelItem => task.Description)</div>
                 </div>
             }
-            <a href="@Url.Action("CreateTask")" class="task-item-new"></a>
+            <a href="@Url.Action("CreateTask", new { columnId = item.ID })" class="task-item-new"></a>
             @*<div class="task-item-new">@Html.ActionLink("Create New", "CreateTask")</div>*@
         </div>
     }

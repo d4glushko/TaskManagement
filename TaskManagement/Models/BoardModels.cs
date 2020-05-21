@@ -23,6 +23,7 @@ namespace TaskManagement.Models
         public Guid ID { get; set; }
         [Required]
         public Guid ColumnID { get; set; }
+        public string UserID { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -33,5 +34,6 @@ namespace TaskManagement.Models
         public int Position { get; set; }
 
         public virtual ColumnModel Column { get; set; }
+        public virtual Users User { get; set; }
     }
 }

@@ -112,15 +112,31 @@ namespace TaskManagement.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             ColumnModel columnModel = db.ColumnModels.Find(id);
+            var tasks = columnModel.Tasks.ToList();
+            foreach (var task in tasks)
+            {
+                db.TaskModels.Remove(task);
+            }
             db.ColumnModels.Remove(columnModel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         // GET: TaskModels/CreateTask
-        public ActionResult CreateTask()
+        public ActionResult CreateTask(Guid? columnId)
         {
-            ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name");
+            if (columnId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ColumnModel columnModel = db.ColumnModels.Find(columnId);
+            if (columnModel == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ColumnID = new SelectList(db.ColumnModels.OrderBy(x => x.Position), "ID", "Name", columnModel.ID);
+            //ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name");
+            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email");
             return View();
         }
 
@@ -129,7 +145,7 @@ namespace TaskManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateTask([Bind(Include = "ID,ColumnID,Name,Description,Position")] TaskModel taskModel)
+        public ActionResult CreateTask([Bind(Include = "ID,ColumnID,UserID,Name,Description,Position")] TaskModel taskModel)
         {
             if (ModelState.IsValid)
             {
@@ -140,6 +156,7 @@ namespace TaskManagement.Controllers
             }
 
             ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name", taskModel.ColumnID);
+            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email", taskModel.UserID);
             return View(taskModel);
         }
 
@@ -155,7 +172,8 @@ namespace TaskManagement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name", taskModel.ColumnID);
+            ViewBag.ColumnID = new SelectList(db.ColumnModels.OrderBy(x => x.Position), "ID", "Name", taskModel.ColumnID);
+            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email", taskModel.UserID);
             return View(taskModel);
         }
 
@@ -164,7 +182,7 @@ namespace TaskManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditTask([Bind(Include = "ID,ColumnID,Name,Description,Position")] TaskModel taskModel)
+        public ActionResult EditTask([Bind(Include = "ID,ColumnID,UserID,Name,Description,Position")] TaskModel taskModel)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +190,8 @@ namespace TaskManagement.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ColumnID = new SelectList(db.ColumnModels, "ID", "Name", taskModel.ColumnID);
+            ViewBag.ColumnID = new SelectList(db.ColumnModels.OrderBy(x => x.Position), "ID", "Name", taskModel.ColumnID);
+            ViewBag.UserID = new SelectList(db.Users.OrderBy(x => x.Email), "Id", "Email", taskModel.UserID);
             return View(taskModel);
         }
 
